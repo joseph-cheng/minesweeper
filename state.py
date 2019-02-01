@@ -9,12 +9,16 @@ class State:
         self.start_game()
 
 
+
     def start_game(self):
         self.generate_board()
         
         self.visible_board = [[False for col in range(self.w)] for row in range(self.h)]
 
         self.flags = []
+
+        self.game_over = False
+
     
     def generate_board(self):
         self.board = [[0 for col in range(self.w)] for row in range(self.h)]
