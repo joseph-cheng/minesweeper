@@ -1,5 +1,6 @@
 import pygame
 from colour import Colour
+from resource_handler import ResourceHandler
 
 class Renderer:
     def __init__(self, w, h, cell_size):
@@ -9,8 +10,12 @@ class Renderer:
         self.cell_size = cell_size
         self.screen = pygame.display.set_mode((w,h))
 
+        self.resource_handler = ResourceHandler()
+        self.flag_res = self.resource_handler.add_resource("res\\flag.png")
+        self.cell_res = self.resource_handler.add_resource("res\\cell.png")
+
         pygame.font.init()
-        self.font = pygame.font.SysFont("Consolas", 30)
+        self.font = pygame.font.SysFont("Consolas", 40)
 
     def render(self, state):
 
@@ -35,17 +40,11 @@ class Renderer:
                         self.screen.blit(text, (self.cell_size*col + (self.cell_size - text.get_width())//2, self.cell_size*row + (self.cell_size - text.get_height())//2))
                         
                 else:
-                    pygame.draw.rect(self.screen,
-                                     Colour.NOT_VISIBLE.value,
-                                     cell_coords)
+                    self.screen.blit(self.resource_handler.get_resource(self.cell_res), cell_coords)
                     
-                    pygame.draw.rect(self.screen,
-                                     (0,0,0),
-                                     cell_coords,
-                                     1)
+                    
                     if [row,col] in state.flags:
-                        pygame.draw.circle(self.screen, (255,0,0), (self.cell_size*col + self.cell_size//2, self.cell_size*row + self.cell_size//2), 10)
-
+                        self.screen.blit(self.resource_handler.get_resource(self.flag_res), cell_coords)
         
         pygame.display.flip()
                     

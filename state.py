@@ -8,6 +8,7 @@ class State:
         self.h = h
         self.start_game()
 
+
     def start_game(self):
         self.generate_board()
         
