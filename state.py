@@ -6,10 +6,15 @@ class State:
         self.no_mines = no_mines
         self.w = w
         self.h = h
+        self.start_game()
+
+    def start_game(self):
         self.generate_board()
         
         self.visible_board = [[False for col in range(self.w)] for row in range(self.h)]
 
+        self.flags = []
+    
     def generate_board(self):
         self.board = [[0 for col in range(self.w)] for row in range(self.h)]
         for mine in range(self.no_mines):
@@ -28,13 +33,33 @@ class State:
         
     def no_mine(self, row, col):
         cell = self.board[row][col]
+
+        if [row,col] in self.flags:
+            return
+        
         if cell == -1:
             print("UH OH!")
             return
 
         self.spread_visibility(row,col)
 
+    def flag_cell(self, row, col):
+        if self.visible_board[row][col]:
+            return
+        if [row,col] in self.flags:
+            self.flags.remove([row,col])
+        else:
+            self.flags.append([row, col])
+
+    def check_for_win(self):
+        if self.w * self.h - sum([sum(row) for row in self.visible_board]) == self.no_mines:
+            print("you won!")
+            return True
+        return False
+    
     def spread_visibility(self, row, col):
+        if [row,col] in self.flags:
+            return
         self.visible_board[row][col] = True
         if self.board[row][col] == 0:
 

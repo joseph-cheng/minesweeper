@@ -17,9 +17,14 @@ def input_callback(state):
             row = mouse_pos[1] // cell_size
             col = mouse_pos[0] // cell_size
 
-            print(row,col)
-
-            state.no_mine(row, col)
+            if event.button == 1:
+                state.no_mine(row, col)
+                state.check_for_win()
+            elif event.button == 3:
+                state.flag_cell(row, col)
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_r:
+                state.start_game()
 
 while True:
     input_callback(state)

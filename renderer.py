@@ -43,6 +43,9 @@ class Renderer:
                                      (0,0,0),
                                      cell_coords,
                                      1)
+                    if [row,col] in state.flags:
+                        pygame.draw.circle(self.screen, (255,0,0), (self.cell_size*col + self.cell_size//2, self.cell_size*row + self.cell_size//2), 10)
 
+        
         pygame.display.flip()
                     
