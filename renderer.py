@@ -7,10 +7,10 @@ class Renderer:
         self.h = h
 
         self.cell_size = cell_size
-        
         self.screen = pygame.display.set_mode((w,h))
 
-        self.font = pygame.font.SysFont("Consolas", 10)
+        pygame.font.init()
+        self.font = pygame.font.SysFont("Consolas", 30)
 
     def render(self, state):
 
@@ -19,30 +19,30 @@ class Renderer:
         for row in range(state.h):
             for col in range(state.w):
                 
-                cell_coords = (cell_size * col, cell_size * row, cell_size, cell_size)
+                cell_coords = (self.cell_size * col, self.cell_size * row, self.cell_size, self.cell_size)
 
                 if state.visible_board[row][col]:
                     pygame.draw.rect(self.screen,
-                                     Colour.VISIBLE,
-                                     cell_coords
-                                     )
-                    pygame.draw.rect(pygame.draw.rect(self.screen,
+                                     Colour.VISIBLE.value,
+                                     cell_coords)
+                    pygame.draw.rect(self.screen,
                                      (0,0,0),
                                      cell_coords,
-                                     1))
+                                     1)
                     
                     if state.board[row][col] > 0:
-                        text = self.font.render(str(state.board[row][col]), True, Colour.NEIGHBOURING_MINES[state.board[row][col]-1])
-                        screen.blit(text, cell_coords)
+                        text = self.font.render(str(state.board[row][col]), True, Colour.NEIGHBOURING_MINES.value[state.board[row][col]-1])
+                        self.screen.blit(text, (self.cell_size*col + (self.cell_size - text.get_width())//2, self.cell_size*row + (self.cell_size - text.get_height())//2))
                         
                 else:
                     pygame.draw.rect(self.screen,
-                                     Colour.NOT_VISIBLE,
-                                     cell_coords
-                                     )
-                    pygame.draw.rect(pygame.draw.rect(self.screen,
+                                     Colour.NOT_VISIBLE.value,
+                                     cell_coords)
+                    
+                    pygame.draw.rect(self.screen,
                                      (0,0,0),
                                      cell_coords,
-                                     1))
-                    
+                                     1)
+
+        pygame.display.flip()
                     

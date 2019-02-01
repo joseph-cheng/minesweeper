@@ -1,7 +1,7 @@
 import random
 
 class State:
-    def __init__(self, w, h, no_mines, screen_w, screen_h):
+    def __init__(self, w, h, no_mines):
 
         self.no_mines = no_mines
         self.w = w
