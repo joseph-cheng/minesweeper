@@ -15,7 +15,7 @@ class Renderer:
         self.cell_res = self.resource_handler.add_resource("res\\cell.png")
 
         pygame.font.init()
-        self.font = pygame.font.SysFont("Consolas", 40)
+        self.font = pygame.font.SysFont("Consolas", 15)
 
     def render(self, state):
 

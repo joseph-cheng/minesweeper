@@ -22,6 +22,7 @@ class State:
     
     def generate_board(self):
         self.board = [[0 for col in range(self.w)] for row in range(self.h)]
+
         for mine in range(self.no_mines):
 
             while True:
@@ -75,18 +76,18 @@ class State:
                 if col > 0:
                     if self.visible_board[row-1][col-1] == False:
                         self.spread_visibility(row-1, col-1)
-                if col < self.h-1:
+                if col < self.w-1:
                     if self.visible_board[row-1][col+1] == False:
                         self.spread_visibility(row-1, col+1)
 
             #Check right hand side
-            if row < self.w-1:
+            if row < self.h-1:
                 if self.visible_board[row+1][col] == False:
                         self.spread_visibility(row+1, col)
                 if col > 0:
                     if self.visible_board[row+1][col-1] == False:
                         self.spread_visibility(row+1, col)
-                if col < self.h-1:
+                if col < self.w-1:
                     if self.visible_board[row+1][col+1] == False:
                         self.spread_visibility(row+1, col+1)
 
@@ -96,14 +97,13 @@ class State:
                         self.spread_visibility(row, col-1)
 
             #check bottom
-            if col < self.h -1:
+            if col < self.w -1:
                 if self.visible_board[row][col+1] == False:
                         self.spread_visibility(row, col+1)
         
         
     def count_mines(self, row, col):
         neighbouring_mines = 0
-        
         #Check left hand side
         if row > 0:
             if self.board[row-1][col] == -1:
@@ -111,18 +111,18 @@ class State:
             if col > 0:
                 if self.board[row-1][col-1] == -1:
                     neighbouring_mines += 1
-            if col < self.h-1:
+            if col < self.w-1:
                 if self.board[row-1][col+1] == -1:
                     neighbouring_mines += 1
 
         #Check right hand side
-        if row < self.w-1:
+        if row < self.h-1:
             if self.board[row+1][col] == -1:
                 neighbouring_mines += 1
             if col > 0:
                 if self.board[row+1][col-1] == -1:
                     neighbouring_mines += 1
-            if col < self.h-1:
+            if col < self.w-1:
                 if self.board[row+1][col+1] == -1:
                     neighbouring_mines += 1
 
@@ -132,7 +132,7 @@ class State:
                 neighbouring_mines += 1
 
         #check bottom
-        if col < self.h -1:
+        if col < self.w -1:
             if self.board[row][col+1] == -1:
                 neighbouring_mines += 1
 

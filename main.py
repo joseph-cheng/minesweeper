@@ -2,9 +2,13 @@ from state import State
 from renderer import Renderer
 import pygame
 
-cell_size = 50
-state = State(10, 10, 10)
-renderer = Renderer(500, 500, cell_size)
+cell_size = 16
+board_width = 20
+board_height = 10
+no_mines = 25
+
+state = State(board_width, board_height, no_mines)
+renderer = Renderer(board_width * cell_size, board_height * cell_size, cell_size)
 
 def input_callback(state):
     for event in pygame.event.get():
